@@ -1,0 +1,14 @@
+<div class="container mt-5">
+  <div class="card border-primary mb-12" style="max-width: 20rem">
+    <div class="card-header">
+    Dosya No:  {{kimliks.dosyaNo}}
+    </div>
+    <div class="card-body">
+      <h4 class="card-title"> {{ kimliks.adi | uppercase }} {{ kimliks.soyadi | uppercase }}</h4>
+      <p class="card-text">
+        Telefon : {{kimliks.cepTel}}
+      </p>
+      <button class="btn btn-success" routerLink="/muayene/{{kimliks.dosyaNo}}" >Muayeneler</button>
+    </div>
+  </div>
+</div>

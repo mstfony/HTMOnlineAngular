@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="form-group mt-5">
+    <input
+      class="form-control form-control-lg"
+      type="text"
+      placeholder="Ara...."
+      id="inputLarge"
+      [(ngModel)]="filter"
+    />
+    <p *ngIf="filter" class="alert alert-danger">
+      Şu anda : {{ filter }} terimini aramaktasınız
+    </p>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Protokol No</th>
+        <th scope="col">Bölüm</th>
+        <th scope="col">Doktor</th>
+        <th scope="col">Geliş Tarihi</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let item of muayeneList | muayeneFilter: filter">
+      <tr class="table-default">
+        <th scope="row">{{ item.protokolNo }}</th>
+        <td>{{ item.bolum }}</td>
+        <td>{{ item.doktor }}</td>
+        <td>{{ item.gelisTarih | date: "dd.MM.yyyy HH:MM" }}</td>
+        <td>
+          <button type="button" class="btn btn-success" routerLink="/labSonuc/{{item.protokolNo}}">
+            Lab. Sonuç
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

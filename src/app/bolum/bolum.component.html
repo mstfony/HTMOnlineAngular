@@ -1,0 +1,64 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-md-4">
+      <h3 *ngIf="bolumList">Bölüm Listesi</h3>
+      <div class="form-group mt-5">
+        <input
+          class="form-control form-control-lg"
+          type="text"
+          placeholder="Ara...."
+          id="inputLarge"
+          [(ngModel)]="filterText"
+        />
+        <p *ngIf="filterText">
+          Şu anda : {{ filterText }} terimini aramaktasınız
+        </p>
+      </div>
+      <div *ngIf="bolumList" class="list-group">
+        <a *ngFor="let itemBolum of bolumList |  bolumFilter : filterText" 
+          class="list-group-item list-group-item-action"
+          routerLink="/bolum/doktor/{{itemBolum.bolumId}}"
+        >{{itemBolum.bolumId}}-{{ itemBolum.bolumAdi }}</a>
+       
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h3 *ngIf="doktorList">Doktor Listesi</h3>
+      <div class="form-group mt-5">
+        <input
+          class="form-control form-control-lg"
+          type="text"
+          placeholder="Ara...."
+          id="inputLarge"
+          [(ngModel)]="filterTextDoktor"
+        />
+        <p *ngIf="filterTextDoktor">
+          Şu anda : {{ filterTextDoktor }} terimini aramaktasınız
+        </p>
+      </div>
+      <div class="row">
+     
+        <div
+          *ngFor="let item of doktorList | doktorFilter: filterTextDoktor"
+          class="card col-md-4 mt-3"
+          style="width: 20rem"
+        > 
+          <img *ngIf="item.drKodu;"
+            src="../../assets/drImg/{{ item.drKodu }}.png"
+            class="card-img-top rounded"
+            alt="..."
+            height="260px"
+            width="120px"
+            onerror="this.src='../../assets/drImg/2.png';"
+          />
+         
+          <div class="card-body">
+            <h5 class="card-title">{{ item.drAdi }}</h5>
+            <p class="card-text">{{ item.bolumAdi }}</p>
+            <a routerLink="" class="btn btn-primary">Randevu Al</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
