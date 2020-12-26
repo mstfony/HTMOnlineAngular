@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -8,9 +9,9 @@ export class BolumService {
 
 constructor(private httpClient:HttpClient) { }
 
-path="https://localhost:5001/api/Bolum/GetBolumList";
+path=environment.path+"/Bolum/GetBolumList";
 
-getPatient():Observable<Bolum[]>{
+getDepartments():Observable<Bolum[]>{
   
   return this.httpClient.get<Bolum[]>(this.path);
 }

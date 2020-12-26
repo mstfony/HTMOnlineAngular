@@ -22,7 +22,7 @@ export class BolumComponent implements OnInit {
 
   ngOnInit() {
   
-    this.bolumService.getPatient().subscribe(data=>{
+    this.bolumService.getDepartments().subscribe(data=>{
       this.bolumList=data;
     });
     this.doktorService.getDoktors().subscribe(data=>{

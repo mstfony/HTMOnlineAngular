@@ -1,0 +1,194 @@
+<div class="container">
+  <h3 class="mt-3">Randevu Alın</h3>
+  <form [formGroup]="randevuAddForm" (ngSubmit)="add()">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group has-success">
+          <label>Kimlik No</label>
+          <input
+            type="text"
+            id="tcKimlikNo"
+            name="tcKimlikNo"
+            formControlName="tcKimlikNo"
+            class="form-control"
+            placeholder="Kimlik Numarası"
+          />
+          <div
+            *ngIf="
+              randevuAddForm.get('tcKimlikNo')?.hasError('required') &&
+              randevuAddForm.get('tcKimlikNo')?.dirty
+            "
+          >
+            Kimlik No Alanı Zorunldur
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Adınız</label>
+          <input
+            type="text"
+            id="adi"
+            name="adi"
+            formControlName="adi"
+            class="form-control"
+            placeholder="Adınız"
+          />
+          <div
+            *ngIf="
+              randevuAddForm.get('adi')?.hasError('required') &&
+              randevuAddForm.get('adi')?.dirty
+            "
+          >
+            Ad Alanı Zorunldur
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Soyadınız</label>
+          <input
+            type="text"
+            id="soyadi"
+            name="soyadi"
+            formControlName="soyadi"
+            class="form-control"
+            placeholder="Soyad"
+          />
+          <div
+            *ngIf="
+              randevuAddForm.get('soyadi')?.hasError('required') &&
+              randevuAddForm.get('soyadi')?.dirty
+            "
+          >
+            Soyad Alanı Zorunldur
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input
+            type="text"
+            id="cepTel"
+            name="cepTel"
+            formControlName="cepTel"
+            class="form-control"
+            placeholder="Telefon"
+          />
+          <div
+            *ngIf="
+              randevuAddForm.get('cepTel')?.hasError('required') &&
+              randevuAddForm.get('cepTel')?.dirty
+            "
+          >
+            Telefon Alanı Zorunldur
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="
+          !(
+            randevuAddForm.get('cepTel')?.hasError('required') ||
+            randevuAddForm.get('soyadi')?.hasError('required') ||
+            randevuAddForm.get('adi')?.hasError('required') ||
+            randevuAddForm.get('soyadi')?.hasError('tcKimlikNo')
+          )
+        "
+        class="col-md-6"
+      >
+        <div class="form-group">
+          <label>Bölüm Seçiniz</label>
+          <select
+            class="form-control"
+            id="bolumKodu"
+            name="bolumKodu"
+            formControlName="bolumKodu"
+            placeholder="Bölüm Seçin"
+            (change)="getDoctors($event)"
+          >
+            <option
+              *ngFor="let item of departments"
+              [ngValue]="item.bolumId"
+              [attr.data-value]="item.bolumId"
+            >
+              {{ item.bolumAdi }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              randevuAddForm.get('bolumKodu')?.hasError('required') &&
+              randevuAddForm.get('bolumKodu')?.touched
+            "
+          >
+            Bölüm Alanı Zorunldur
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Doktor Seçiniz</label>
+          <select
+            class="form-control"
+            id="drKodu"
+            name="drKodu"
+            formControlName="drKodu"
+            (change)="getTimes()"
+          >
+            <option>Lütfen Seçin</option>
+            <option *ngFor="let item of doctors" [ngValue]="item.drKodu">
+              {{ item.drAdi }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              randevuAddForm.get('drKodu')?.hasError('required') &&
+              randevuAddForm.get('drKodu')?.touched
+            "
+          >
+            Doktor Alanı Zorunldur
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Tarih Seçiniz</label>
+          <input
+            class="form-control"
+            id="tarih"
+            name="tarih"
+            formControlName="tarih"
+            type="date"
+            (change)="getTimes()"
+          />
+          <div
+            *ngIf="
+              randevuAddForm.get('tarih')?.hasError('required') &&
+              randevuAddForm.get('tarih')?.touched
+            "
+          >
+            Zaman Alanı Zorunldur
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Saat Seçiniz</label>
+          <select
+            class="form-control"
+            id="siraNo"
+            name="siraNo"
+            formControlName="siraNo"
+          >
+            <option *ngFor="let item of saats" [ngValue]="item.siraNo">
+              {{ item.saat }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              randevuAddForm.get('siraNo')?.hasError('required') &&
+              randevuAddForm.get('siraNo')?.touched
+            "
+          >
+            Saat Alanı Zorunldur
+          </div>
+        </div>
+        <input
+          type="submit"
+          class="btn btn-success pull-right"
+          value="Onayla"
+          [disabled]="!randevuAddForm.valid"
+        />
+      </div>
+    </div>
+  </form>
+</div>
+

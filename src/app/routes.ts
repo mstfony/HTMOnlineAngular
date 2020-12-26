@@ -1,3 +1,4 @@
+import { RandevuComponent } from './randevu/randevu.component';
 import { BolumComponent } from './bolum/bolum.component';
 import { LaboratuvarComponent } from './laboratuvar/laboratuvar.component';
 import { MuayeneComponent } from './muayene/muayene.component';
@@ -10,5 +11,6 @@ export const appRoutes: Routes = [
   { path: "labSonuc/:id", component: LaboratuvarComponent },
   { path: "bolum", component: BolumComponent },
   { path: "bolum/doktor/:id", component: BolumComponent },
+  { path: "randevu", component: RandevuComponent },
   {path:"**",redirectTo:"kimlik",pathMatch:"full"}
 ];

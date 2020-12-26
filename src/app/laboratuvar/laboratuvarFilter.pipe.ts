@@ -1,3 +1,4 @@
+import { LaboratuvarDetail } from './../models/laboratuvar-detail';
 import { Laboratuvar } from './../models/laboratuvar';
 import { Pipe, PipeTransform } from '@angular/core';
 
@@ -6,13 +7,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class LaboratuvarFilterPipe implements PipeTransform {
 
-  transform(value: Laboratuvar[], filter?: any): Laboratuvar[] {
+  transform(value: any, filter?: any): LaboratuvarDetail[] {
     filter = filter ? filter.toLowerCase() : '';
     return filter
       ? value.filter(
-          (data: Laboratuvar) =>
-            data.grupAdi?.toLowerCase().indexOf(filter) !== -1 ||
-            data.testAdi?.toLowerCase().indexOf(filter) !== -1  
+          (data: LaboratuvarDetail) =>
+           data.grupAdi?.toLowerCase().indexOf(filter) !== -1  
         )
       : value;
   }

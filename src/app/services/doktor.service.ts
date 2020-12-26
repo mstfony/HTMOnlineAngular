@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { HttpClient } from '@angular/common/http';
 import { Doktor } from './../models/doktor';
 import { Injectable } from '@angular/core';
@@ -7,7 +8,7 @@ import { Observable } from 'rxjs';
 export class DoktorService {
   constructor(private httpClient: HttpClient) {}
 
-  path = 'https://localhost:5001/api/Doktor';
+  path = environment.path+'/Doktor';
 
   getDoktors(): Observable<Doktor[]> {
     return this.httpClient.get<Doktor[]>(this.path+"/GetDoktors");

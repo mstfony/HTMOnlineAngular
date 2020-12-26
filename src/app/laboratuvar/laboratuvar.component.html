@@ -1,38 +1,61 @@
 <div class="container">
-  <div class="form-group mt-5">
-    <input
-      class="form-control form-control-lg"
-      type="text"
-      placeholder="Ara...."
-      id="inputLarge"
-      [(ngModel)]="filter"
-    />
-    <p *ngIf="filter" class="alert alert-danger">
-      Şu anda : {{ filter }} terimini aramaktasınız
-    </p>
+  <div *ngIf="errorMessage; else table" class="mt-5">
+    <div class="alert alert-danger">{{ errorMessage }}</div>
   </div>
-
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">Grup Adı</th>
-        <th scope="col">Test Adı</th>
-        <th scope="col">Sonuç</th>
-        <th scope="col">Sonuç</th>
-        <th scope="col">Min</th>
-        <th scope="col">Max</th>
-      </tr>
-    </thead>
-    <tbody *ngFor="let item of labSonucList | laboratuvarFilter: filter">
-      <tr [ngClass]="(item.sonucN>item.min && item.sonucN<item.max)==true?'table-success':'table-danger'">
-        <th scope="row">{{ item.grupAdi }}</th>
-        <td>{{ item.testAdi }}</td>
-        <td>{{ item.sonucN }}</td>
-        <td>{{ item.sonucS }}</td>
-        <td>{{ item.min }}</td>
-        <td>{{ item.max }}</td> 
-      </tr>
-    </tbody>
-  </table>
+  <ng-template #table>
+    <button mat-button class="btn btn-primary mt-5" (click)="yazdir()">Yazdır</button>
+    <mat-card class="mt-5" id="print-section" >
+      <h3>{{nameSurname}} Laboratuvar Sonuçları</h3>
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel *ngFor="let item of labSonucList">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h3>{{ item.grupAdi }}</h3>
+            </mat-panel-title>
+            <mat-panel-description>
+              <span class="pull-right">{{
+                item.istekTarihi | date: "dd.MM.yyy HH:MM"
+              }}</span>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div *ngFor="let sonuc of item.labDetails" class="card">
+            <div class="card-header">
+              <h3
+                *ngIf="
+                  sonuc.sonucN > sonuc.min && sonuc.sonucN < sonuc.max;
+                  else aralikDisi
+                "
+                class="card-title"
+              >
+                {{ sonuc.testAdi
+                }}<span class="pull-right"
+                  ><i style="color: green"
+                    ><fa-icon [icon]="confirmIcon"></fa-icon></i
+                ></span>
+              </h3>
+              <ng-template #aralikDisi>
+                <h3 class="card-title">
+                  {{ sonuc.testAdi
+                  }}<span class="pull-right"
+                    ><i style="color: red"
+                      ><fa-icon [icon]="minusIcon"></fa-icon></i
+                  ></span>
+                </h3>
+              </ng-template>
+            </div>
+            <div class="card-body">
+              <h2 *ngIf="sonuc.sonucN" class="card-text">
+                Sonuç : <span class="pull-right">{{ sonuc.sonucN }}</span>
+              </h2>
+              <h2 *ngIf="sonuc.sonucS" class="card-text">
+                Sonuç : <span class="pull-right">{{ sonuc.sonucS }}</span>
+              </h2>
+              <p class="card-text">Min-Max : {{ sonuc.min }}-{{ sonuc.max }}</p>
+              <p>Sonuç Tarihi :{{ sonuc.tarih | date: "dd.MM.yyyy HH:MM" }}</p>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card>
+  </ng-template>
 </div>
-

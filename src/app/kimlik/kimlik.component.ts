@@ -1,3 +1,4 @@
+import { AlertifyService } from './../services/alertify.service';
 import { Kimlik } from './../models/kimlik';
 import { Component, OnInit } from '@angular/core';
 import { KimlikService } from '../services/kimlik.service';
@@ -9,7 +10,7 @@ import { KimlikService } from '../services/kimlik.service';
 })
 export class KimlikComponent implements OnInit {
 
-  constructor(private kimlikService:KimlikService) { }
+  constructor(private kimlikService:KimlikService,private alertify:AlertifyService) { }
 
   kimliks: Kimlik = new Kimlik;
 
