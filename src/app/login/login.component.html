@@ -1,0 +1,77 @@
+<div class="container">
+  <img src="../assets/logo/hatem.png" alt="" style="margin-left: auto; margin-right: auto;display: block;margin-top: auto;"/>
+  <hr>
+  <div *ngIf="smsSended" class="alert alert-success">
+    {{smsSended}}
+  </div>
+  <form
+    *ngIf="keyIsHidden"
+    #getKeyForm="ngForm"
+    (ngSubmit)="getSmsKey(modelUser)"
+  >
+    <div class="form-group">
+      <label for="inputEmail" class="visually-hidden">Kimlik/Identity</label>
+      <input
+        type="text"
+        #cepTel="ngModel"
+        [(ngModel)]="modelUser.identity"
+        id="cepTel"
+        name="cepTel"
+        class="form-control"
+        placeholder=""
+        required
+        autofocus
+      />
+      <div *ngIf="cepTel.invalid && cepTel.dirty" class="alert alert-danger">
+        Kimlik Alanı Zorunludur/Identity Required
+      </div>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Şifre Al</button>
+    <p class="mt-5 mb-3 text-muted">
+      Cep Telefonunuza gelen tek kullanımlık şifre ile giriş yapabilirsiniz
+    </p>
+  </form>
+
+  <form *ngIf="!keyIsHidden" #loginForm="ngForm" (ngSubmit)="login(modelUser)">
+    <div class="form-group">
+      <label for="inputEmail" class="visually-hidden">Kimlik/Identity</label>
+      <input
+        type="text"
+        #cepTel="ngModel"
+        [(ngModel)]="modelUser.identity"
+        id="cepTel"
+        name="cepTel"
+        class="form-control"
+        placeholder=""
+        required
+        autofocus
+        disabled
+      />
+      <div *ngIf="cepTel.invalid && cepTel.dirty" class="alert alert-danger">
+        Kimlik Alanı Zorunludur/Identity Required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputEmail" class="visually-hidden">Şifre/Sms Key</label>
+      <input
+        type="password"
+        #smsKey="ngModel"
+        [(ngModel)]="modelUser.password"
+        id="smsKey"
+        name="smsKey"
+        class="form-control"
+        placeholder="Şifre"
+        required
+        autofocus
+      />
+      <div *ngIf="smsKey.invalid && smsKey.dirty" class="alert alert-danger">
+        Şifre Zorunludur/Sms Key Required
+      </div>
+    </div>
+
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Onayla</button>
+    <p class="mt-5 mb-3 text-muted">
+      Cep Telefonunuza gelen tek kullanımlık şifre ile giriş yapabilirsiniz
+    </p>
+  </form>
+</div>

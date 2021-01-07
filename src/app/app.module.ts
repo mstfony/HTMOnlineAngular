@@ -1,4 +1,11 @@
-import { MatDatepickerModule, MatDatepickerToggleIcon } from '@angular/material/datepicker';
+import { RandevuFilterPipe } from './randevu/reserved/randevu-filter.pipe';
+import { ReservedComponent } from './randevu/reserved/reserved.component';
+import { LoginGuard } from './core/login-guard';
+import { AccountService } from './services/account.service';
+import {
+  MatDatepickerModule,
+  MatDatepickerToggleIcon,
+} from '@angular/material/datepicker';
 import { DoktorFilterPipe } from './bolum/doktorFilter.pipe';
 import { BolumFilterPipe } from './bolum/bolumFilter.pipe';
 
@@ -23,24 +30,29 @@ import { RandevuComponent } from './randevu/randevu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MatOption } from '@angular/material/core';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { Moment } from 'moment';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { ReactiveFormsModule } from "@angular/forms";
-import {  NgbDateStruct,NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AddDialogComponent } from './randevu/add-dialog/add-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgbDateStruct, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { GlobalErrorHandler } from './core/global-error-handler';
-import {AlertifyService} from './services/alertify.service'
+import { AlertifyService } from './services/alertify.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatSelectModule} from '@angular/material/select';
-import {MatCardModule} from '@angular/material/card';
-import {NgxPrintModule} from 'ngx-print';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { NgxPrintModule } from 'ngx-print';
+import { NobetciEczaneComponent } from './nobetci-eczane/nobetci-eczane.component';
+import { LoginComponent } from './login/login.component';
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 @NgModule({
-  declarations: [					
+  declarations: [
     AppComponent,
     NavComponent,
     KimlikComponent,
@@ -50,12 +62,13 @@ import {NgxPrintModule} from 'ngx-print';
     LaboratuvarFilterPipe,
     BolumFilterPipe,
     DoktorFilterPipe,
-      BolumComponent,
-      RandevuComponent,
-      RandevuComponent,
-      AddDialogComponent,
-     
-   ],
+    BolumComponent,
+    RandevuComponent,
+    ReservedComponent,
+    NobetciEczaneComponent,
+    LoginComponent,
+    RandevuFilterPipe,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -76,13 +89,26 @@ import {NgxPrintModule} from 'ngx-print';
     MatStepperModule,
     MatSelectModule,
     MatCardModule,
-    NgxPrintModule
-    
+    NgxPrintModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['https://online.hatemhastanesi.com.tr'],
+        disallowedRoutes: ['http://example.com/examplebadroute/'],
+      },
+    }),
   ],
-  providers: [KimlikService,MatDatepickerModule,AlertifyService,{
-    provide: ErrorHandler,
-    useClass: GlobalErrorHandler
-  }],
+  providers: [
+    KimlikService,
+    MatDatepickerModule,
+    AlertifyService,
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler,
+    },
+    AccountService,
+    LoginGuard,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

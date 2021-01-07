@@ -9,8 +9,7 @@ import { Bolum } from './../models/bolum';
 import { Randevu } from './../models/randevu';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Injectable, OnInit } from '@angular/core';
-import { AddDialogComponent } from './add-dialog/add-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {formatDate} from '@angular/common';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
@@ -45,6 +44,8 @@ export class RandevuComponent implements OnInit {
   saats: Saat[] = [];
   sendRandevu: SendedRandevu = new SendedRandevu();
   siraNo!: number;
+  kvkk!:boolean;
+  ileti!:boolean;
 
   createRandevuAddForm() {
     this.randevuAddForm = this.formBuilder.group({
@@ -56,46 +57,34 @@ export class RandevuComponent implements OnInit {
       drKodu: [0, Validators.required],
       tarih: ['', Validators.required],
       siraNo: [0, Validators.required],
+      kvkk:['',Validators.requiredTrue]
     });
   }
-
-
 
   ngOnInit() {
     this.bolumService.getDepartments().subscribe((data) => {
       this.departments = data;
     });
     this.createRandevuAddForm();
-    this.firstFormGroup = this.formBuilder.group({
-      tcKimlikNo: ['', Validators.required],
-      adi: ['', Validators.required],
-      soyadi: ['', Validators.required],
-      cepTel: ['', Validators.required],
-    });
-    this.secondFormGroup = this.formBuilder.group({
-      bolumKodu: [0, Validators.required],
-      drKodu: [0, Validators.required],
-      tarih: ['', Validators.required],
-      siraNo: [0, Validators.required],
-    });
+    
   }
 
   getDoctors(dep: any) {
-    console.log(dep);
+  
     let depId: number = dep.target.selectedOptions[0].dataset.value;
-    console.log(depId);
     this.doktorService.getDoktorById(depId).subscribe((data) => {
       this.doctors = data;
     });
   }
 
   getTimes() {
+  //  
     if (!this.randevuAddForm.get('tarih')?.value) {
      this.randevuAddForm.patchValue({
        tarih:formatDate(new Date(), 'yyyy-MM-dd', 'en')
      })
     }
-    
+    this.saats=[];
     this.randevuService
       .getSaatler(
         this.randevuAddForm.get('drKodu')?.value,
@@ -107,13 +96,15 @@ export class RandevuComponent implements OnInit {
   }
   setDate(){
     this.dateTime=new Date;
-    console.log(this.dateTime);
+    
   }
   add() {
     if (this.randevuAddForm.valid) {
       this.randevu = Object.assign({}, this.randevuAddForm.value);
+      
       this.randevuService.setAppointment(this.randevu).subscribe((rndData) => {
-       this.alert.success("Randevu Numaranız : " + this.randevu.siraNo)
+      
+       this.alert.success("Randevunuz Kaydedildi. Randevu bilgileriniz sms olarak iletildi!")
       });
     }
   }

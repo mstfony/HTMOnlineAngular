@@ -21,7 +21,7 @@ export class AlertifyService {
       title: 'Hata !',
       text: message,
       icon: 'error',
-      confirmButtonText: 'Cool',
+      confirmButtonText: 'Tamam',
     });
   }
 }

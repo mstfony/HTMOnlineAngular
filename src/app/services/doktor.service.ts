@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment.prod';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Doktor } from './../models/doktor';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -11,10 +11,16 @@ export class DoktorService {
   path = environment.path+'/Doktor';
 
   getDoktors(): Observable<Doktor[]> {
-    return this.httpClient.get<Doktor[]>(this.path+"/GetDoktors");
+    let headers=new HttpHeaders();
+    headers=headers.append("Content-Type","application/json");
+    headers=headers.append("Authorization","Bearer "+localStorage.getItem('token'))
+    return this.httpClient.get<Doktor[]>(this.path+"/GetDoktors",{headers:headers});
   }
 
   getDoktorById(id:number): Observable<Doktor[]> {
-    return this.httpClient.get<Doktor[]>(this.path+"/GetDoktorById/"+id);
+    let headers=new HttpHeaders();
+    headers=headers.append("Content-Type","application/json");
+    headers=headers.append("Authorization","Bearer "+localStorage.getItem('token'))
+    return this.httpClient.get<Doktor[]>(this.path+"/GetDoktorById/"+id,{headers:headers});
   }
 }

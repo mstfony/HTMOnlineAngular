@@ -1,7 +1,7 @@
 import { LaboratuvarDetail } from './../models/laboratuvar-detail';
 import { environment } from './../../environments/environment.prod';
 import { Laboratuvar } from './../models/laboratuvar';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable ,throwError} from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
@@ -10,11 +10,14 @@ import { retry, catchError } from 'rxjs/operators';
 export class LabsonucService {
   constructor(private httpClient: HttpClient) {}
 
-  path = 'https://businessapi.hatemhastanesi.com.tr/api/Laboratuvar/GetLabSonuc/';
+  path = environment.path+'/Laboratuvar/GetById/';
 
   getLabSonuc(id: number): Observable<LaboratuvarDetail[]> {
+    let headers=new HttpHeaders();
+    headers=headers.append("Content-Type","application/json");
+    headers=headers.append("Authorization","Bearer "+localStorage.getItem('token'))
     return this.httpClient
-      .get<LaboratuvarDetail[]>(this.path + id)
+      .get<LaboratuvarDetail[]>(this.path + id,{headers:headers})
       .pipe(retry(1), catchError(this.handleError));
   }
   handleError(error: { error: { message: any; }; status: any; message: any; }) {
@@ -26,7 +29,7 @@ export class LabsonucService {
       // server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
+    
     return throwError(errorMessage);
   }
 }

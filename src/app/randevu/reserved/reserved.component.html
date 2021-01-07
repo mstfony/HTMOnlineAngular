@@ -1,3 +1,36 @@
-<p>
-  reserved works!
-</p>
+
+<div class="container">
+
+  <div *ngIf="mesaj" class="alert alert-success mt-4">
+    {{mesaj}}
+  </div>
+
+  <div  class="table-responsive">
+    <table *ngIf="randevuList;else noData" class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Tarih</th>
+          <th scope="col">Saat</th>
+          <th scope="col">Bölüm</th>
+          <th scope="col">Doktor</th>
+          <th scope="col">Geldi Mi</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of randevuList">
+          <td>{{item.tarih | date :"dd.MM.yyyy"}}</td>
+          <td>{{item.saat}}</td>
+          <td>{{item.bolumAdi}}</td>
+          <td>{{item.doktorAdi}}</td>
+          <td>{{item.geldiMi}}</td>
+          <td *ngIf="item.iptalEdilebilir==true"><button id="delete" name="delete" (click)="deleteAppointment(item.siraNo!=null?item.siraNo:0)" class="btn btn-danger">İptal Et</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #noData>
+    <div class="alert alert-danger">Muayene kaydınız bulunamadı</div>
+  </ng-template>
+</div>
+

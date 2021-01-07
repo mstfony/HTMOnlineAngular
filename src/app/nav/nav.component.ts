@@ -1,3 +1,4 @@
+import { AccountService } from './../services/account.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private accontService:AccountService) { }
+  
   ngOnInit() {
+    
   }
+  logOut(){
+    this.accontService.logOut();
+  }
+
+  get isAuthenticated(){
+    //return localStorage.getItem('token');
+    return this.accontService.isTokenExpire();
+  }
+  
 
 }

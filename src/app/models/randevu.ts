@@ -1,6 +1,7 @@
 export class Randevu {
     
     siraNo:number | undefined;
+    geldiMi!: string;
     tarih!:Date;
     saat!:string;
     adi!:string;
@@ -16,5 +17,6 @@ export class Randevu {
     bolumAdi!:string;
     doktorAdi!:string;
     randevuTipi!:string;
+    iptalEdilebilir!:boolean;
    
 }

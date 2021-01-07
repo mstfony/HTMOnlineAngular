@@ -1,5 +1,5 @@
 import { environment } from './../../environments/environment.prod';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Muayene } from '../models/muayene';
@@ -11,6 +11,9 @@ export class MuayeneService {
   path = environment.path+'/Muayene/GetById/';
 
   getMuayeneList(id: number): Observable<Muayene[]> {
-    return this.httpClient.get<Muayene[]>(this.path + id);
+    let headers=new HttpHeaders();
+    headers=headers.append("Content-Type","application/json");
+    headers=headers.append("Authorization","Bearer "+localStorage.getItem('token'))
+    return this.httpClient.get<Muayene[]>(this.path + id,{headers:headers});
   }
 }

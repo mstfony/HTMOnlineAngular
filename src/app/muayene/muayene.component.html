@@ -16,7 +16,6 @@
     <table *ngIf="muayeneList;else noData" class="table table-hover">
       <thead>
         <tr>
-          <th scope="col">Protokol No</th>
           <th scope="col">Bölüm</th>
           <th scope="col">Doktor</th>
           <th scope="col">Geliş Tarihi</th>
@@ -25,7 +24,6 @@
       </thead>
       <tbody *ngFor="let item of muayeneList | muayeneFilter: filter">
         <tr class="table-default">
-          <th scope="row">{{ item.protokolNo }}</th>
           <td>{{ item.bolum }}</td>
           <td>{{ item.doktor }}</td>
           <td>{{ item.gelisTarihi | date: "dd.MM.yyyy HH:MM" }}</td>
@@ -33,7 +31,7 @@
             <button
               type="button"
               class="btn btn-success"
-              routerLink="/labSonuc/{{ item.protokolNo }}"
+              routerLink="/labSonuc/{{item.protokolNo}}"
             >
               Lab. Sonuç
             </button>

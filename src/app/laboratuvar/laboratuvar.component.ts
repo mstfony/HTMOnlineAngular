@@ -21,35 +21,51 @@ export class LaboratuvarComponent implements OnInit {
   ) {}
   //panelOpenState = false;
   //panelOpenState = false;
-  @ViewChild(MatAccordion)accordion!: MatAccordion;
+  @ViewChild(MatAccordion) accordion!: MatAccordion;
 
   labSonucList: LaboratuvarDetail[] = [];
   errorMessage!: string;
   filter = '';
-  confirmIcon=faCheckCircle;
-  minusIcon=faMinusCircle;
-  nameSurname!:string;
+  confirmIcon = faCheckCircle;
+  minusIcon = faMinusCircle;
+
+  nameSurname!: string;
+  identity!: string;
+  doctorName!:string;
+  departmentName!:string;
+  
   ngOnInit() {
     this.activatedRoot.params.subscribe((params) => {
-      this.getLabSonuc(params['id']);
+      this.getLabSonuc(+(atob(params['id'])));
+     
     });
+    this.getKimlik();
+  }
+
+  yazdir() {
+    this.accordion.openAll();
+    setTimeout(function(){
+      window.print();
+    },500)
     
   }
 
-  yazdir(){
-    this.accordion.openAll()
-    window.print();
+  getKimlik(){
+    this.nameSurname=localStorage.getItem('name')+" "+localStorage.getItem('surName');
+    this.identity=JSON.parse(localStorage.getItem('kimlik') || '{}');
   }
 
-  getLabSonuc(id:number) {
-    this.labSonucService.getLabSonuc(id).subscribe((data) => {
-    
-      this.labSonucList = data;
-      console.log(this.labSonucList);
-    },(err) => {
-      console.log(err);
-      this.errorMessage="Bu muayenenizde bir laboratuvar tetkiki bulunmamaktadır.";
-      
-    });
+  getLabSonuc(id: number) {
+    this.labSonucService.getLabSonuc(id).subscribe(
+      (data) => {
+        this.labSonucList = data;
+        
+      },
+      (err) => {
+        
+        this.errorMessage =
+          'Bu muayenenizde bir laboratuvar tetkiki bulunmamaktadır.';
+      }
+    );
   }
 }
