@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  path: "https://online.hatemhastanesi.com.tr/api"
+  path: "https://htmonline.hatemhastanesi.com.tr/api"
 };
 
 /*

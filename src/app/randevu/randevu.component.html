@@ -73,7 +73,7 @@
             formControlName="cepTel"
             class="form-control text-transform:lowercase"
             placeholder="Telefon"
-            
+            mask="(000)-000-00-00"
           />
           <div
             *ngIf="
@@ -134,7 +134,7 @@
           >
             <option>Lütfen Seçin</option>
             <option style="background-image:url(../../assets/drImg/{{item.drKodu}}.png);" *ngFor="let item of doctors" [ngValue]="item.drKodu">
-              {{ item.drAdi }}
+            {{item.drUnvan}}.{{ item.drAdi }}
           
             </option>
           </select>
@@ -204,4 +204,3 @@
     </div>
   </form>
 </div>
-

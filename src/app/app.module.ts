@@ -47,6 +47,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { NobetciEczaneComponent } from './nobetci-eczane/nobetci-eczane.component';
 import { LoginComponent } from './login/login.component';
 import { JwtModule } from '@auth0/angular-jwt';
+import { NgxMaskModule } from 'ngx-mask';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -90,6 +91,7 @@ export function tokenGetter() {
     MatSelectModule,
     MatCardModule,
     NgxPrintModule,
+    NgxMaskModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

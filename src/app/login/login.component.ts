@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
         this.smsSended=data['phoneNumber']+" numaralı telefona sms gönderildi!";
       },
       error: (error) => {
+        console.log(error.error)
         this.keyIsHidden = true;
         this.alertService.error("TC Kimlik No Hatalı/Identity not valid")
       },

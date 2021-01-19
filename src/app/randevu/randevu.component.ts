@@ -101,7 +101,8 @@ export class RandevuComponent implements OnInit {
   add() {
     if (this.randevuAddForm.valid) {
       this.randevu = Object.assign({}, this.randevuAddForm.value);
-      
+      this.randevu.aciklama="HATEM ONLINE";
+      this.randevu.internetRandevusumu="T";
       this.randevuService.setAppointment(this.randevu).subscribe((rndData) => {
       
        this.alert.success("Randevunuz Kaydedildi. Randevu bilgileriniz sms olarak iletildi!")

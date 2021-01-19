@@ -11,8 +11,8 @@ export class Randevu {
     tipi!:number;
     islemiGiren!:string;
     tcKimlikNo!: string;
-    aciklama!:string;
-    internetRandevusumu!:string;
+    aciklama:string="HATEM ONLINE";
+    internetRandevusumu:string="T";
     cepTel!:string;
     bolumAdi!:string;
     doktorAdi!:string;
